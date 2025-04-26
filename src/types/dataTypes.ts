@@ -1,4 +1,3 @@
-// src/types/dataTypes.ts
 export interface SpendData {
     current: number;
     reference: number;
