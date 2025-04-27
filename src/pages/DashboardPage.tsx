@@ -28,7 +28,7 @@ const mockData = [
     state: "California",
     city: "San Francisco",
     sector: "Food",
-    category: "Beverages",
+    category: "Juice",
     startDate: "2024-04-01",
     endDate: "2024-04-30",
     mySpend: { current: 130000, reference: 110000, absoluteChange: 20000, percentChange: 18.18 },
