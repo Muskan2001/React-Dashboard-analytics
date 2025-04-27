@@ -1,75 +1,98 @@
-import { AppBar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Toolbar, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem } from '@mui/material';
 import { useState } from 'react';
 
+const TopBar = ({ onUserSelect }: { onUserSelect: (userId: number) => void }) => {
+  const [openDialog, setOpenDialog] = useState(false); 
 
-const mockUsers = [
-  { id: 1, name: 'Muskan' },
-  { id: 2, name: 'Tia' },
-  { id: 3, name: 'Ak' },
-  { id: 4, name: 'Shivi' },
-  { id: 5, name: 'Vs' },
-];
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
 
-interface TopBarProps {
-  onUserSelect: (userId: number) => void;
-}
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
-const TopBar = ({ onUserSelect }: TopBarProps) => {
-  const [open, setOpen] = useState(false);
-
-  const handleUserClick = (userId: number) => {
-    onUserSelect(userId);
-    setOpen(false);
+  const handleUserSelect = (userId: number) => {
+    onUserSelect(userId); 
+    setOpenDialog(false); 
   };
 
   return (
-    <>
-      {/* <AppBar position="static" color="default" elevation={0}> */}
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            {/* Dashboard */}
-          </Typography>
-          <Button variant="contained" color="primary"  onClick={() => setOpen(true)}>
-            My Members
-          </Button>
-        </Toolbar>
-      {/* </AppBar> */}
-
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>
-          Select a Member
-          <IconButton
-            aria-label="close"
-            onClick={() => setOpen(false)}
+    <Box>
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        maxWidth="md" 
+        fullWidth={true}
+        sx={{
+          '& .MuiDialog-paper': {
+            padding: '20px', 
+            borderRadius: '12px',
+            boxShadow: 24,
+          },
+        }}
+      >
+        <DialogTitle sx={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold', color: '#3f51b5' }}>
+          Select a User
+        </DialogTitle>
+        <DialogContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px' }}>
+          <Box sx={{ width: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <MenuItem onClick={() => handleUserSelect(1)} sx={{ fontSize: '1.1rem', fontWeight: 'bold', padding: '12px', borderRadius: '8px', '&:hover': { backgroundColor: '#f1f1f1' } }}>
+              Muskan
+            </MenuItem>
+            <MenuItem onClick={() => handleUserSelect(2)} sx={{ fontSize: '1.1rem', fontWeight: 'bold', padding: '12px', borderRadius: '8px', '&:hover': { backgroundColor: '#f1f1f1' } }}>
+              Tia
+            </MenuItem>
+            <MenuItem onClick={() => handleUserSelect(3)} sx={{ fontSize: '1.1rem', fontWeight: 'bold', padding: '12px', borderRadius: '8px', '&:hover': { backgroundColor: '#f1f1f1' } }}>
+              Vaibhav
+            </MenuItem>
+            <MenuItem onClick={() => handleUserSelect(4)} sx={{ fontSize: '1.1rem', fontWeight: 'bold', padding: '12px', borderRadius: '8px', '&:hover': { backgroundColor: '#f1f1f1' } }}>
+              Shivani
+            </MenuItem>
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center' }}>
+          <Button
+            onClick={handleClose}
+            color="primary"
+            variant="outlined"
             sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
+              borderRadius: '20px', 
+              padding: '10px 20px', 
+              fontWeight: 'bold',
+              '&:hover': {
+                backgroundColor: '#3f51b5', 
+                color: 'white', 
+              },
             }}
           >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent dividers>
-          {mockUsers.map((user) => (
-            <Button
-              key={user.id}
-              fullWidth
-              sx={{ marginBottom: 1 }}
-              onClick={() => handleUserClick(user.id)}
-            >
-              {user.name}
-            </Button>
-          ))}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
-    </>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
+        <Button
+          onClick={handleClickOpen} 
+          variant="contained"
+          sx={{
+            borderRadius: '20px',  
+            padding: '12px 20px',  
+            backgroundColor: '#3f51b5',  
+            color: 'white',
+            fontSize: '1.1rem',
+            fontWeight: 'bold',
+            '&:hover': {
+              backgroundColor: '#303f9f',  
+            },
+          }}
+        >
+          My Member
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
 export default TopBar;
+

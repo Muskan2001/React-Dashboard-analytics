@@ -4,7 +4,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   OutlinedInput,
   Checkbox,
   ListItemText,
@@ -14,11 +13,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useState } from 'react';
 
 const sectors = ['Retail', 'Food', 'Industrial'];
-const categories = ['Juice', 'Snacks', 'Frozen Foods', 'Beverages'];
+const categories = ['Juice', 'Mobile Devices', 'Electronics', 'Parts', 'Beverages'];
 const attributes = ['Country', 'State', 'City', 'Sector', 'Category'];
-const country = ['India', 'USA', 'Canada', 'Russia', 'Auntralia'];
-const state = ['Maharashtra', 'Madhya Pradesh', 'Canada', 'Russia', 'Auntralia'];
-
+const countries = ['India', 'USA', 'Canada', 'UK', 'Australia'];
+const sector = ['Retail', 'Food', 'Industrial'];
+const category = ['Juice', 'Mobile Devices', 'Electronics', 'Parts', 'Beverages'];
 const metrics = ['My Spend', 'Same Store Spend', 'New Store Spend', 'Lost Store Spend'];
 
 interface FilterPanelProps {
@@ -32,6 +31,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [groupingAttributes, setGroupingAttributes] = useState<string[]>([]);
   const [selectedMetrics, setSelectedMetrics] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]); 
 
   const handleFilterChange = () => {
     onFilterChange({
@@ -41,6 +41,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
       category: selectedCategory,
       groupingAttributes,
       selectedMetrics,
+      countries: selectedCountries,
     });
   };
 
@@ -69,6 +70,28 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
           }}
           slotProps={{ textField: { fullWidth: true } }}
         />
+
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Country</InputLabel>
+          <Select
+            multiple
+            value={selectedCountries}
+            onChange={(e) => {
+              const value = e.target.value as string[];
+              setSelectedCountries(value);
+              handleFilterChange();
+            }}
+            input={<OutlinedInput label="Country" />}
+            renderValue={(selected) => selected.join(', ')}
+          >
+            {countries.map((country) => (
+              <MenuItem key={country} value={country}>
+                <Checkbox checked={selectedCountries.indexOf(country) > -1} />
+                <ListItemText primary={country} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
         <FormControl sx={{ minWidth: 150 }}>
           <InputLabel>Sector</InputLabel>

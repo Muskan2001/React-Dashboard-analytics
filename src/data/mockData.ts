@@ -10,7 +10,7 @@ export const mockUsers = [
 ];
 
 export const mockData: UserData[] = [
-    // [
+   
         {
           country: "India",
           state: "Maharashtra",
@@ -143,7 +143,7 @@ export const mockData: UserData[] = [
             percentChange: 100
           }
         }
-    //   ]
+ 
       
       
 

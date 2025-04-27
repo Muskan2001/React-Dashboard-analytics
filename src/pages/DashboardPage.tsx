@@ -8,161 +8,136 @@ import TimeSeriesChart from '../components/TimeSeriesChart';
 import PercentChangeBarChart from '../components/PercentChangeChartBar';
 
 const mockData = [
+  {
+    id: 1,
+    country: "India",
+    state: "Maharashtra",
+    city: "Mumbai",
+    sector: "Food",
+    category: "Juice",
+    startDate: "2024-04-01",
+    endDate: "2024-04-30",
+    mySpend: { current: 120000, reference: 100000, absoluteChange: 20000, percentChange: 20 },
+    sameStoreSpend: { current: 95000, reference: 90000, absoluteChange: 5000, percentChange: 5.56 },
+    newStoreSpend: { current: 15000, reference: 10000, absoluteChange: 5000, percentChange: 50 },
+    lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+  },
+  {
+    id: 1,
+    country: "USA",
+    state: "California",
+    city: "San Francisco",
+    sector: "Food",
+    category: "Beverages",
+    startDate: "2024-04-01",
+    endDate: "2024-04-30",
+    mySpend: { current: 130000, reference: 110000, absoluteChange: 20000, percentChange: 18.18 },
+    sameStoreSpend: { current: 100000, reference: 95000, absoluteChange: 5000, percentChange: 5.26 },
+    newStoreSpend: { current: 20000, reference: 10000, absoluteChange: 10000, percentChange: 100 },
+    lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+  },
+  {
+    id: 2,
+    country: "USA",
+    state: "California",
+    city: "San Francisco",
+    sector: "Retail",
+    category: "Electronics",
+    startDate: "2024-04-01",
+    endDate: "2024-04-30",
+    mySpend: { current: 130000, reference: 110000, absoluteChange: 20000, percentChange: 18.18 },
+    sameStoreSpend: { current: 100000, reference: 95000, absoluteChange: 5000, percentChange: 5.26 },
+    newStoreSpend: { current: 20000, reference: 10000, absoluteChange: 10000, percentChange: 100 },
+    lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+  },
+  
     {
-        country: "India",
-        state: "Maharashtra",
-        city: "Mumbai",
-        sector: "Retail",
-        category: "Juice",
-        startDate: "2024-04-01",
-        endDate: "2024-04-30",
-        mySpend: {
-          current: 120000,
-          reference: 100000,
-          absoluteChange: 20000,
-          percentChange: 20
-        },
-        sameStoreSpend: {
-          current: 95000,
-          reference: 90000,
-          absoluteChange: 5000,
-          percentChange: 5.56
-        },
-        newStoreSpend: {
-          current: 15000,
-          reference: 10000,
-          absoluteChange: 5000,
-          percentChange: 50
-        },
-        lostStoreSpend: {
-          current: 10000,
-          reference: 15000,
-          absoluteChange: -5000,
-          percentChange: -33.33
-        }
-      },
-      {
-        country: "India",
-        state: "Karnataka",
-        city: "Bengaluru",
-        sector: "Retail",
-        category: "Snacks",
-        startDate: "2024-04-01",
-        endDate: "2024-04-30",
-        mySpend: {
-          current: 90000,
-          reference: 85000,
-          absoluteChange: 5000,
-          percentChange: 5.88
-        },
-        sameStoreSpend: {
-          current: 70000,
-          reference: 75000,
-          absoluteChange: -5000,
-          percentChange: -6.67
-        },
-        newStoreSpend: {
-          current: 10000,
-          reference: 5000,
-          absoluteChange: 5000,
-          percentChange: 100
-        },
-        lostStoreSpend: {
-          current: 10000,
-          reference: 5000,
-          absoluteChange: 5000,
-          percentChange: 100
-        }
-      },
-      {
-        country: "USA",
-        state: "California",
-        city: "San Francisco",
-        sector: "Hospitality",
-        category: "Beverages",
-        startDate: "2024-04-01",
-        endDate: "2024-04-30",
-        mySpend: {
-          current: 130000,
-          reference: 110000,
-          absoluteChange: 20000,
-          percentChange: 18.18
-        },
-        sameStoreSpend: {
-          current: 100000,
-          reference: 95000,
-          absoluteChange: 5000,
-          percentChange: 5.26
-        },
-        newStoreSpend: {
-          current: 20000,
-          reference: 10000,
-          absoluteChange: 10000,
-          percentChange: 100
-        },
-        lostStoreSpend: {
-          current: 10000,
-          reference: 15000,
-          absoluteChange: -5000,
-          percentChange: -33.33
-        }
-      },
-      {
-        country: "USA",
-        state: "Texas",
-        city: "Austin",
-        sector: "Retail",
-        category: "Frozen Foods",
-        startDate: "2024-04-01",
-        endDate: "2024-04-30",
-        mySpend: {
-          current: 80000,
-          reference: 70000,
-          absoluteChange: 10000,
-          percentChange: 14.29
-        },
-        sameStoreSpend: {
-          current: 60000,
-          reference: 55000,
-          absoluteChange: 5000,
-          percentChange: 9.09
-        },
-        newStoreSpend: {
-          current: 10000,
-          reference: 10000,
-          absoluteChange: 0,
-          percentChange: 0
-        },
-        lostStoreSpend: {
-          current: 10000,
-          reference: 5000,
-          absoluteChange: 5000,
-          percentChange: 100
-        }
-      }
+      id: 2,
+      country: "Canada",
+      state: "Ontario",
+      city: "Toronto",
+      sector: "Retail",
+      category: "Electronics",
+      startDate: "2024-04-01",
+      endDate: "2024-04-30",
+      mySpend: { current: 200000, reference: 180000, absoluteChange: 20000, percentChange: 11.11 },
+      sameStoreSpend: { current: 150000, reference: 145000, absoluteChange: 5000, percentChange: 3.45 },
+      newStoreSpend: { current: 40000, reference: 25000, absoluteChange: 15000, percentChange: 60 },
+      lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+    },
+    {
+      id: 3,
+      country: "Canada",
+      state: "Ontario",
+      city: "Toronto",
+      sector: "Industrial",
+      category: "Parts",
+      startDate: "2024-04-01",
+      endDate: "2024-04-30",
+      mySpend: { current: 200000, reference: 180000, absoluteChange: 20000, percentChange: 11.11 },
+      sameStoreSpend: { current: 150000, reference: 145000, absoluteChange: 5000, percentChange: 3.45 },
+      newStoreSpend: { current: 40000, reference: 25000, absoluteChange: 15000, percentChange: 60 },
+      lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+    },
+    {
+      id: 4,
+      country: "UK",
+      state: "England",
+      city: "London",
+      sector: "Industrial",
+      category: "Mobile Devices",
+      startDate: "2024-04-01",
+      endDate: "2024-04-30",
+      mySpend: { current: 200000, reference: 180000, absoluteChange: 20000, percentChange: 11.11 },
+      sameStoreSpend: { current: 150000, reference: 145000, absoluteChange: 5000, percentChange: 3.45 },
+      newStoreSpend: { current: 40000, reference: 25000, absoluteChange: 15000, percentChange: 60 },
+      lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+    },
+   
+    {
+      id: 4,
+      country: "India",
+      state: "Maharashtra",
+      city: "Pune",
+      sector: "Industrial",
+      category: "Mobile Devices",
+      startDate: "2024-04-01",
+      endDate: "2024-04-30",
+      mySpend: { current: 200000, reference: 180000, absoluteChange: 20000, percentChange: 11.11 },
+      sameStoreSpend: { current: 150000, reference: 145000, absoluteChange: 5000, percentChange: 3.45 },
+      newStoreSpend: { current: 40000, reference: 25000, absoluteChange: 15000, percentChange: 60 },
+      lostStoreSpend: { current: 10000, reference: 15000, absoluteChange: -5000, percentChange: -33.33 }
+    },
+  
+  
 ];
 
 function DashboardPage() {
   const [tab, setTab] = useState(0);
-  const [selectedUser, setSelectedUser] = useState<number | null>(null);
-  const [filters, setFilters] = useState<any>({});
-  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [selectedUser, setSelectedUser] = useState<number | null>(null); // Store selected user ID
+  const [filters, setFilters] = useState<any>({}); // Filters state
+  const [filteredData, setFilteredData] = useState<any[]>([]); // Filtered data state
 
+  // Handle Tab change
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
+  // Handle user selection from the TopBar
   const handleUserSelect = (userId: number) => {
-    setSelectedUser(userId);
+    setSelectedUser(userId); // Update selected user
   };
 
+  // Handle filter changes from FilterPanel
   const handleFilterChange = (newFilters: any) => {
-    setFilters(newFilters);
+    setFilters(newFilters); // Update filters
   };
 
+  // Apply filters and selected user to the mock data
   useEffect(() => {
     let data = [...mockData];
 
+    // Apply date filter
     if (filters.startDate && filters.endDate) {
       data = data.filter(item => {
         const itemDate = new Date(item.startDate);
@@ -170,32 +145,41 @@ function DashboardPage() {
       });
     }
 
+    // Apply sector filter
     if (filters.sector) {
       data = data.filter(item => item.sector === filters.sector);
     }
 
+    // Apply category filter
     if (filters.category) {
       data = data.filter(item => item.category === filters.category);
     }
 
-    setFilteredData(data);
-  }, [filters, selectedUser]);
+    // Filter by selected user (if applicable)
+    if (selectedUser !== null) {
+      data = data.filter(item => item.id === selectedUser); // Assuming each user has an 'id' field
+    }
 
+    // Update filtered data
+    setFilteredData(data);
+  }, [filters, selectedUser]); // Re-run when filters or selectedUser change
+
+  // Map filtered data for the table
   const tableData = filteredData.map((item) => ({
     country: item.country,
-    state:item.state,
+    state: item.state,
     city: item.city,
     sector: item.sector,
     category: item.category,
     spend: item.mySpend.current,
     percentChange: item.mySpend.percentChange,
     absoluteChange: item.mySpend.absoluteChange,
-    samestorespend:item.sameStoreSpend.current,
-    newstorespend:item.newStoreSpend.current,
+    samestorespend: item.sameStoreSpend.current,
+    newstorespend: item.newStoreSpend.current,
     loststorespend: item.lostStoreSpend.current
-
   }));
 
+  // Map filtered data for the BarChart
   const barChartData = filteredData.map((item) => ({
     category: item.category,
     mySpend: item.mySpend.current,
@@ -206,17 +190,18 @@ function DashboardPage() {
 
   return (
     <>
-     
       <Container maxWidth="lg" sx={{ paddingY: 4 }}>
         <Tabs value={tab} onChange={handleTabChange}>
           <Tab label="Metrics View" />
           <Tab label="Analytics View" />
         </Tabs>
+
         {tab === 0 && (
           <>
-           <TopBar onUserSelect={handleUserSelect} />
-            <FilterPanel onFilterChange={handleFilterChange} />
-            <DataTable data={tableData} />
+          
+            <TopBar onUserSelect={handleUserSelect} /> {/* User selection in TopBar */}
+            <FilterPanel onFilterChange={handleFilterChange} /> {/* Pass filter change handler */}
+            <DataTable data={tableData} /> {/* DataTable for displaying filtered data */}
             <BarChart
               data={barChartData}
               keys={['mySpend', 'newStoreSpend']}
@@ -224,43 +209,18 @@ function DashboardPage() {
             />
           </>
         )}
+
         {tab === 1 && (
-            <>
-              <TimeSeriesChart
-                data={[
-                  {
-                    id: 'My Spend',
-                    data: [
-                      { x: 'Jan', y: 10000 },
-                      { x: 'Feb', y: 15000 },
-                      { x: 'Mar', y: 20000 },
-                      { x: 'Apr', y: 25000 },
-                    ],
-                  },
-                  {
-                    id: 'New Store Spend',
-                    data: [
-                      { x: 'Jan', y: 5000 },
-                      { x: 'Feb', y: 7000 },
-                      { x: 'Mar', y: 10000 },
-                      { x: 'Apr', y: 12000 },
-                    ],
-                  },
-                ]}
-              />
-          
-<PercentChangeBarChart
-                data={[
-                  { category: 'Juice', percentChange: 20 },
-                  { category: 'Snacks', percentChange: 5.88 },
-                  { category: 'Beverages', percentChange: 18.18 },
-                  { category: 'Frozen Foods', percentChange: 14.29 },
-                ]}
-              />
-            </>
-          )}
-          
-=      </Container>
+          <>
+            <TimeSeriesChart
+              data={[{ id: 'My Spend', data: [{ x: 'Jan', y: 10000 }, { x: 'Feb', y: 15000 }, { x: 'Mar', y: 20000 }, { x: 'Apr', y: 25000 }] }]}
+            />
+            <PercentChangeBarChart
+              data={[{ category: 'Juice', percentChange: 20 }, { category: 'Snacks', percentChange: 5.88 }, { category: 'Beverages', percentChange: 18.18 }, { category: 'Frozen Foods', percentChange: 14.29 }]}
+            />
+          </>
+        )}
+      </Container>
     </>
   );
 }
