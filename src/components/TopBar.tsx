@@ -25,16 +25,16 @@ const TopBar = ({ onUserSelect }: TopBarProps) => {
 
   return (
     <>
-      <AppBar position="static" color="default" elevation={0}>
+      {/* <AppBar position="static" color="default" elevation={0}> */}
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Dashboard
+            {/* Dashboard */}
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+          <Button variant="contained" color="primary"  onClick={() => setOpen(true)}>
             My Members
           </Button>
         </Toolbar>
-      </AppBar>
+      {/* </AppBar> */}
 
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>

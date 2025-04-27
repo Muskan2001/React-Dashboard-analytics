@@ -206,7 +206,7 @@ function DashboardPage() {
 
   return (
     <>
-      <TopBar onUserSelect={handleUserSelect} />
+     
       <Container maxWidth="lg" sx={{ paddingY: 4 }}>
         <Tabs value={tab} onChange={handleTabChange}>
           <Tab label="Metrics View" />
@@ -214,6 +214,7 @@ function DashboardPage() {
         </Tabs>
         {tab === 0 && (
           <>
+           <TopBar onUserSelect={handleUserSelect} />
             <FilterPanel onFilterChange={handleFilterChange} />
             <DataTable data={tableData} />
             <BarChart

@@ -56,7 +56,7 @@ const DataTable = ({ data }: DataTableProps) => {
         <Table>
           <TableHead>
             <TableRow>
-              {['country','state','city','sector', 'category', 'spend', 'percentChange', 'absoluteChange','samestorespend'].map((key) => (
+              {['country','state','city','sector', 'category', 'spend', 'percentChange', 'absoluteChange','samestorespend','newstorespend','loststorespend'].map((key) => (
                 <TableCell key={key}>
                   <TableSortLabel
                     active={orderBy === key}
@@ -72,8 +72,8 @@ const DataTable = ({ data }: DataTableProps) => {
                     {key === 'percentChange' && '% Change'}
                     {key === 'absoluteChange' && 'Absolute Change'}
                     {key === 'samestorespend' && 'Same Store Spend'}
-                    {/* {key === 'newstorespend' && 'New Store Spend'}
-                    {key === 'loststorespend' && 'Lost Store Spend'} */}
+                    {key === 'newstorespend' && 'New Store Spend'}
+                    {key === 'loststorespend' && 'Lost Store Spend'}
 
 
 
@@ -86,6 +86,10 @@ const DataTable = ({ data }: DataTableProps) => {
             {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idx) => (
               <TableRow key={idx}>
                  <TableCell>{row.country}</TableCell>
+                 <TableCell>{row.state}</TableCell>
+                 <TableCell>{row.city}</TableCell>
+
+
                 <TableCell>{row.sector}</TableCell>
                 <TableCell>{row.category}</TableCell>
                 <TableCell>{row.spend}</TableCell>

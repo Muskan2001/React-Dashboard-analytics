@@ -16,6 +16,9 @@ import { useState } from 'react';
 const sectors = ['Retail', 'Food', 'Industrial'];
 const categories = ['Juice', 'Snacks', 'Frozen Foods', 'Beverages'];
 const attributes = ['Country', 'State', 'City', 'Sector', 'Category'];
+const country = ['India', 'USA', 'Canada', 'Russia', 'Auntralia'];
+const state = ['Maharashtra', 'Madhya Pradesh', 'Canada', 'Russia', 'Auntralia'];
+
 const metrics = ['My Spend', 'Same Store Spend', 'New Store Spend', 'Lost Store Spend'];
 
 interface FilterPanelProps {
