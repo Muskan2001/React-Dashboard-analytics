@@ -1,11 +1,11 @@
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, TableSortLabel, TablePagination
+  Paper, TableSortLabel, TablePagination, Typography
 } from '@mui/material';
 import { useState } from 'react';
 
 interface DataRow {
-  country:string;
+  country: string;
   state: string;
   city: string;
   sector: string;
@@ -15,12 +15,26 @@ interface DataRow {
   absoluteChange: number;
   samestorespend: number;
   newstorespend: number;
-  loststorespend:number;
+  loststorespend: number;
 }
 
 interface DataTableProps {
   data: DataRow[];
 }
+
+const columns = [
+  { id: 'country', label: 'Country' },
+  { id: 'state', label: 'State' },
+  { id: 'city', label: 'City' },
+  { id: 'sector', label: 'Sector' },
+  { id: 'category', label: 'Category' },
+  { id: 'spend', label: 'My Spend' },
+  { id: 'percentChange', label: '% Change' },
+  { id: 'absoluteChange', label: 'Absolute Change' },
+  { id: 'samestorespend', label: 'Same Store Spend' },
+  { id: 'newstorespend', label: 'New Store Spend' },
+  { id: 'loststorespend', label: 'Lost Store Spend' },
+];
 
 const DataTable = ({ data }: DataTableProps) => {
   const [orderBy, setOrderBy] = useState<keyof DataRow>('spend');
@@ -51,60 +65,52 @@ const DataTable = ({ data }: DataTableProps) => {
   });
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: 4 }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden', mt: 4, borderRadius: 3, boxShadow: 3 }}>
+      <Typography variant="h6" sx={{ p: 2, pb: 0 }}>
+        Member Metrics Table
+      </Typography>
       <TableContainer>
-        <Table>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
-              {['country','state','city','sector', 'category', 'spend', 'percentChange', 'absoluteChange','samestorespend','newstorespend','loststorespend'].map((key) => (
-                <TableCell key={key}>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  sortDirection={orderBy === column.id ? order : false}
+                  sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
+                >
                   <TableSortLabel
-                    active={orderBy === key}
-                    direction={orderBy === key ? order : 'asc'}
-                    onClick={() => handleRequestSort(key as keyof DataRow)}
-                  > {key === 'country' && 'Country'}
-                   {key === 'state' && 'State'}
-                   {key === 'city' && 'City'}
-
-                    {key === 'sector' && 'Sector'}
-                    {key === 'category' && 'Category'}
-                    {key === 'spend' && 'My Spend'}
-                    {key === 'percentChange' && '% Change'}
-                    {key === 'absoluteChange' && 'Absolute Change'}
-                    {key === 'samestorespend' && 'Same Store Spend'}
-                    {key === 'newstorespend' && 'New Store Spend'}
-                    {key === 'loststorespend' && 'Lost Store Spend'}
-
-
-
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={() => handleRequestSort(column.id as keyof DataRow)}
+                  >
+                    {column.label}
                   </TableSortLabel>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
+
           <TableBody>
             {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idx) => (
-              <TableRow key={idx}>
-                 <TableCell>{row.country}</TableCell>
-                 <TableCell>{row.state}</TableCell>
-                 <TableCell>{row.city}</TableCell>
-
-
+              <TableRow key={idx} hover>
+                <TableCell>{row.country}</TableCell>
+                <TableCell>{row.state}</TableCell>
+                <TableCell>{row.city}</TableCell>
                 <TableCell>{row.sector}</TableCell>
                 <TableCell>{row.category}</TableCell>
-                <TableCell>{row.spend}</TableCell>
+                <TableCell>{row.spend.toLocaleString()}</TableCell>
                 <TableCell>{row.percentChange}%</TableCell>
-                <TableCell>{row.absoluteChange}</TableCell>
-                <TableCell>{row.samestorespend}</TableCell>
-                <TableCell>{row.newstorespend}</TableCell>
-                <TableCell>{row.loststorespend}</TableCell>
-
-                
+                <TableCell>{row.absoluteChange.toLocaleString()}</TableCell>
+                <TableCell>{row.samestorespend.toLocaleString()}</TableCell>
+                <TableCell>{row.newstorespend.toLocaleString()}</TableCell>
+                <TableCell>{row.loststorespend.toLocaleString()}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
       <TablePagination
         component="div"
         count={data.length}
