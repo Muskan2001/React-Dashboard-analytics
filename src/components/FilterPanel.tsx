@@ -16,8 +16,6 @@ const sectors = ['Retail', 'Food', 'Industrial'];
 const categories = ['Juice', 'Mobile Devices', 'Electronics', 'Parts', 'Beverages'];
 const attributes = ['Country', 'State', 'City', 'Sector', 'Category'];
 const countries = ['India', 'USA', 'Canada', 'UK', 'Australia'];
-const sector = ['Retail', 'Food', 'Industrial'];
-const category = ['Juice', 'Mobile Devices', 'Electronics', 'Parts', 'Beverages'];
 const metrics = ['My Spend', 'Same Store Spend', 'New Store Spend', 'Lost Store Spend'];
 
 interface FilterPanelProps {
@@ -28,17 +26,17 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectedSector, setSelectedSector] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [groupingAttributes, setGroupingAttributes] = useState<string[]>([]);
   const [selectedMetrics, setSelectedMetrics] = useState<string[]>([]);
-  const [selectedCountries, setSelectedCountries] = useState<string[]>([]); 
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
 
   const handleFilterChange = () => {
     onFilterChange({
       startDate,
       endDate,
       sector: selectedSector,
-      category: selectedCategory,
+      categories: selectedCategories,
       groupingAttributes,
       selectedMetrics,
       countries: selectedCountries,
@@ -58,7 +56,6 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
           }}
           slotProps={{ textField: { fullWidth: true } }}
         />
-
         <DatePicker
           label="End Date"
           value={endDate}
@@ -86,14 +83,14 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
           >
             {countries.map((country) => (
               <MenuItem key={country} value={country}>
-                <Checkbox checked={selectedCountries.indexOf(country) > -1} />
+                <Checkbox checked={selectedCountries.includes(country)} />
                 <ListItemText primary={country} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
 
-        <FormControl sx={{ minWidth: 150 }}>
+        <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>Sector</InputLabel>
           <Select
             value={selectedSector}
@@ -111,19 +108,23 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
           </Select>
         </FormControl>
 
-        <FormControl sx={{ minWidth: 150 }}>
+        <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>Category</InputLabel>
           <Select
-            value={selectedCategory}
-            label="Category"
+            multiple
+            value={selectedCategories}
             onChange={(e) => {
-              setSelectedCategory(e.target.value);
+              const value = e.target.value as string[];
+              setSelectedCategories(value);
               handleFilterChange();
             }}
+            input={<OutlinedInput label="Category" />}
+            renderValue={(selected) => selected.join(', ')}
           >
             {categories.map((cat) => (
               <MenuItem key={cat} value={cat}>
-                {cat}
+                <Checkbox checked={selectedCategories.includes(cat)} />
+                <ListItemText primary={cat} />
               </MenuItem>
             ))}
           </Select>
@@ -144,7 +145,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
           >
             {attributes.map((attr) => (
               <MenuItem key={attr} value={attr}>
-                <Checkbox checked={groupingAttributes.indexOf(attr) > -1} />
+                <Checkbox checked={groupingAttributes.includes(attr)} />
                 <ListItemText primary={attr} />
               </MenuItem>
             ))}
@@ -166,7 +167,7 @@ const FilterPanel = ({ onFilterChange }: FilterPanelProps) => {
           >
             {metrics.map((metric) => (
               <MenuItem key={metric} value={metric}>
-                <Checkbox checked={selectedMetrics.indexOf(metric) > -1} />
+                <Checkbox checked={selectedMetrics.includes(metric)} />
                 <ListItemText primary={metric} />
               </MenuItem>
             ))}
