@@ -5,11 +5,17 @@ import {
 import { useState } from 'react';
 
 interface DataRow {
+  country:string;
+  state: string;
+  city: string;
   sector: string;
   category: string;
   spend: number;
   percentChange: number;
   absoluteChange: number;
+  samestorespend: number;
+  newstorespend: number;
+  loststorespend:number;
 }
 
 interface DataTableProps {
@@ -50,18 +56,27 @@ const DataTable = ({ data }: DataTableProps) => {
         <Table>
           <TableHead>
             <TableRow>
-              {['sector', 'category', 'spend', 'percentChange', 'absoluteChange'].map((key) => (
+              {['country','state','city','sector', 'category', 'spend', 'percentChange', 'absoluteChange','samestorespend'].map((key) => (
                 <TableCell key={key}>
                   <TableSortLabel
                     active={orderBy === key}
                     direction={orderBy === key ? order : 'asc'}
                     onClick={() => handleRequestSort(key as keyof DataRow)}
-                  >
+                  > {key === 'country' && 'Country'}
+                   {key === 'state' && 'State'}
+                   {key === 'city' && 'City'}
+
                     {key === 'sector' && 'Sector'}
                     {key === 'category' && 'Category'}
-                    {key === 'spend' && 'Spend'}
+                    {key === 'spend' && 'My Spend'}
                     {key === 'percentChange' && '% Change'}
                     {key === 'absoluteChange' && 'Absolute Change'}
+                    {key === 'samestorespend' && 'Same Store Spend'}
+                    {/* {key === 'newstorespend' && 'New Store Spend'}
+                    {key === 'loststorespend' && 'Lost Store Spend'} */}
+
+
+
                   </TableSortLabel>
                 </TableCell>
               ))}
@@ -70,11 +85,17 @@ const DataTable = ({ data }: DataTableProps) => {
           <TableBody>
             {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idx) => (
               <TableRow key={idx}>
+                 <TableCell>{row.country}</TableCell>
                 <TableCell>{row.sector}</TableCell>
                 <TableCell>{row.category}</TableCell>
                 <TableCell>{row.spend}</TableCell>
                 <TableCell>{row.percentChange}%</TableCell>
                 <TableCell>{row.absoluteChange}</TableCell>
+                <TableCell>{row.samestorespend}</TableCell>
+                <TableCell>{row.newstorespend}</TableCell>
+                <TableCell>{row.loststorespend}</TableCell>
+
+                
               </TableRow>
             ))}
           </TableBody>
