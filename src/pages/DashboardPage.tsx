@@ -15,8 +15,8 @@ const mockData = [
     city: "Mumbai",
     sector: "Food",
     category: "Juice",
-    startDate: "2024-04-01",
-    endDate: "2024-04-30",
+    startDate: "2025-04-01",
+    endDate: "2025-04-03",
     mySpend: { current: 120000, reference: 100000, absoluteChange: 20000, percentChange: 20 },
     sameStoreSpend: { current: 95000, reference: 90000, absoluteChange: 5000, percentChange: 5.56 },
     newStoreSpend: { current: 15000, reference: 10000, absoluteChange: 5000, percentChange: 50 },
@@ -29,8 +29,8 @@ const mockData = [
     city: "San Francisco",
     sector: "Food",
     category: "Juice",
-    startDate: "2024-04-01",
-    endDate: "2024-04-30",
+    startDate: "2025-04-03",
+    endDate: "2025-04-03",
     mySpend: { current: 130000, reference: 110000, absoluteChange: 20000, percentChange: 18.18 },
     sameStoreSpend: { current: 100000, reference: 95000, absoluteChange: 5000, percentChange: 5.26 },
     newStoreSpend: { current: 20000, reference: 10000, absoluteChange: 10000, percentChange: 100 },
@@ -43,8 +43,8 @@ const mockData = [
     city: "San Francisco",
     sector: "Retail",
     category: "Electronics",
-    startDate: "2024-04-01",
-    endDate: "2024-04-30",
+    startDate: "2025-04-05",
+    endDate: "2025-04-05",
     mySpend: { current: 130000, reference: 110000, absoluteChange: 20000, percentChange: 18.18 },
     sameStoreSpend: { current: 100000, reference: 95000, absoluteChange: 5000, percentChange: 5.26 },
     newStoreSpend: { current: 20000, reference: 10000, absoluteChange: 10000, percentChange: 100 },
@@ -114,57 +114,84 @@ const mockData = [
 
 function DashboardPage() {
   const [tab, setTab] = useState(0);
-  const [selectedUser, setSelectedUser] = useState<number | null>(null); // Store selected user ID
-  const [filters, setFilters] = useState<any>({}); // Filters state
-  const [filteredData, setFilteredData] = useState<any[]>([]); // Filtered data state
+  const [selectedUser, setSelectedUser] = useState<number | null>(null); 
+ 
+  const [filters, setFilters] = useState<any>({
+    startDate: null,
+    endDate: null,
+    sector: null,
+    category: [],
+    countries: []
+  }); 
 
-  // Handle Tab change
+  const [filteredData, setFilteredData] = useState<any[]>([]);
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
-  // Handle user selection from the TopBar
   const handleUserSelect = (userId: number) => {
-    setSelectedUser(userId); // Update selected user
+    setFilters({
+      startDate: null,
+      endDate: null,
+      sector: null,
+      category: [],
+      countries: []
+    });
+  
+    setSelectedUser(userId);
   };
+  
 
-  // Handle filter changes from FilterPanel
   const handleFilterChange = (newFilters: any) => {
-    setFilters(newFilters); // Update filters
+    setFilters(newFilters); 
   };
 
-  // Apply filters and selected user to the mock data
+  
+  
+  
+
+
   useEffect(() => {
     let data = [...mockData];
-
-    // Apply date filter
+  
     if (filters.startDate && filters.endDate) {
+      const startDate = new Date(filters.startDate);
+      const endDate = new Date(filters.endDate);
       data = data.filter(item => {
-        const itemDate = new Date(item.startDate);
-        return itemDate >= filters.startDate && itemDate <= filters.endDate;
+        const itemStartDate = new Date(item.startDate);
+        return itemStartDate >= startDate && itemStartDate <= endDate;
       });
     }
-
-    // Apply sector filter
-    if (filters.sector) {
+  
+    if (filters.startDate && !filters.endDate) {
+      const startDate = new Date(filters.startDate);
+      data = data.filter(item => new Date(item.startDate) >= startDate);
+    }
+  
+    if (!filters.startDate && filters.endDate) {
+      const endDate = new Date(filters.endDate);
+      data = data.filter(item => new Date(item.startDate) <= endDate);
+    }
+  
+    if (filters.sector && filters.sector !== '') {
       data = data.filter(item => item.sector === filters.sector);
     }
-
-    // Apply category filter
-    if (filters.category) {
-      data = data.filter(item => item.category === filters.category);
+  
+    if (filters.category && filters.category.length > 0) {
+      data = data.filter(item => filters.category.includes(item.category));
     }
-
-    // Filter by selected user (if applicable)
+  
+    if (filters.countries && filters.countries.length > 0) {
+      data = data.filter(item => filters.countries.includes(item.country));
+    }
+  
     if (selectedUser !== null) {
-      data = data.filter(item => item.id === selectedUser); // Assuming each user has an 'id' field
+      data = data.filter(item => item.id === selectedUser);
     }
-
-    // Update filtered data
+  
     setFilteredData(data);
-  }, [filters, selectedUser]); // Re-run when filters or selectedUser change
-
-  // Map filtered data for the table
+  }, [filters, selectedUser]);  
+  
   const tableData = filteredData.map((item) => ({
     country: item.country,
     state: item.state,
@@ -179,7 +206,6 @@ function DashboardPage() {
     loststorespend: item.lostStoreSpend.current
   }));
 
-  // Map filtered data for the BarChart
   const barChartData = filteredData.map((item) => ({
     category: item.category,
     mySpend: item.mySpend.current,
@@ -200,8 +226,9 @@ function DashboardPage() {
           <>
           
             <TopBar onUserSelect={handleUserSelect} /> {/* User selection in TopBar */}
-            <FilterPanel onFilterChange={handleFilterChange} /> {/* Pass filter change handler */}
-            <DataTable data={tableData} /> {/* DataTable for displaying filtered data */}
+            <FilterPanel onFilterChange={handleFilterChange} />
+            {/* <FilterPanel filters={filters} onFilterChange={handleFilterChange} /> */}
+            <DataTable data={tableData} />
             <BarChart
               data={barChartData}
               keys={['mySpend', 'newStoreSpend']}
